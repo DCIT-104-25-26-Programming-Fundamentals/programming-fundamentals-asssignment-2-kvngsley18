@@ -36,4 +36,34 @@
 
 #include <iostream>
 using namespace std;
+bool isPrime(int n) {
+    // Numbers less than 2 are not prime
+    if (n < 2) {
+        return false;
+    }
+
+    // Check for factors from 2 up to sqrt(n)
+    for (int i = 2; i * i <= n; ++i) {
+        if (n % i == 0) {
+            return false; // Found a factor, so n is not prime
+        }
+    }
+
+    return true; // No factors found, n is prime
+}
+
+int main() {
+    int number;
+
+    std::cout << "Enter a number: ";
+    if (std::cin >> number) {
+        if (isPrime(number)) {
+            std::cout << number << " is a prime number." << std::endl;
+        } else {
+            std::cout << number << " is NOT a prime number." << std::endl;
+        }
+    }
+
+    return 0;
+}
 
