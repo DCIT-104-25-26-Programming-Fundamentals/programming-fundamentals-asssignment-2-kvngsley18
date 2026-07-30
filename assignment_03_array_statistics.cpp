@@ -39,6 +39,75 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+
+
 #include <iostream>
+#include <vector>
+
 using namespace std;
 
+double getSum(const vector<double>& arr) {
+    double total = 0.0;
+    for (size_t i = 0; i < arr.size(); ++i) {
+        total += arr[i];
+    }
+    return total;
+}
+
+double getAverage(const vector<double>& arr) {
+    if (arr.empty()) return 0.0;
+    return getSum(arr) / arr.size();
+}
+
+double getMax(const vector<double>& arr) {
+    double maxVal = arr[0];
+    for (size_t i = 1; i < arr.size(); ++i) {
+        if (arr[i] > maxVal) {
+            maxVal = arr[i];
+        }
+    }
+    return maxVal;
+}
+
+
+double getMin(const vector<double>& arr) {
+    double minVal = arr[0];
+    for (size_t i = 1; i < arr.size(); ++i) {
+        if (arr[i] < minVal) {
+            minVal = arr[i];
+        }
+    }
+    return minVal;
+}
+
+int main() {
+    int count;
+
+    cout << "How many numbers? ";
+    cin >> count;
+
+    if (count <= 0) {
+        cout << "Error: Number of elements must be greater than 0." << endl;
+        return 1;
+    }
+
+    vector<double> numbers(count);
+
+    for (int i = 0; i < count; ++i) {
+        cout << "Enter number " << (i + 1) << ": ";
+        cin >> numbers[i];
+    }
+
+    double sum = getSum(numbers);
+    double average = getAverage(numbers);
+    double maxVal = getMax(numbers);
+    double minVal = getMin(numbers);
+
+    cout << "\nResults:" << endl;
+    cout << "Sum:     " << sum << endl;
+    cout << "Average: " << average << endl;
+    cout << "Maximum: " << maxVal << endl;
+    cout << "Minimum: " << minVal << endl;
+
+    return 0;
+}
