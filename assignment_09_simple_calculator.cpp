@@ -92,7 +92,6 @@ double multiply(double a, double b) {
     return a * b;
 }
 
-// Returns true if division was successful, false if division by zero
 bool divide(double a, double b, double& result) {
     if (b == 0) {
         return false;
@@ -101,7 +100,8 @@ bool divide(double a, double b, double& result) {
     return true;
 }
 
-bool modulus(double a, double b, double& result) {
+// Renamed from 'modulus' to 'calculateModulus' to resolve namespace collision with std::modulus
+bool calculateModulus(double a, double b, double& result) {
     if (b == 0) {
         return false;
     }
@@ -131,7 +131,6 @@ void displayMenu() {
     cout << "Select an operation (1-7): ";
 }
 
-// Helper to reliably prompt and read a double input
 bool getOperand(const string& prompt, double& value) {
     cout << prompt;
     while (!(cin >> value)) {
@@ -169,7 +168,6 @@ int main() {
         getOperand("Enter first number : ", num1);
         getOperand("Enter second number: ", num2);
 
-        // Format floating point numbers to 2 decimal places
         cout << fixed << setprecision(2);
 
         switch (choice) {
@@ -197,7 +195,7 @@ int main() {
                 break;
 
             case 5:
-                if (modulus(num1, num2, result)) {
+                if (calculateModulus(num1, num2, result)) {
                     cout << "Result: " << num1 << " % " << num2 << " = " << result << endl;
                 } else {
                     cout << "Error: Cannot perform modulus by zero." << endl;
