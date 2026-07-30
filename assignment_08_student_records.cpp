@@ -86,14 +86,12 @@
 
 using namespace std;
 
-// Struct to store individual student records
 struct Student {
     string name;
     int id;
     vector<double> scores;
 };
 
-// Helper function to calculate average score for a single student
 double calculateStudentAverage(const Student& student) {
     if (student.scores.empty()) return 0.0;
 
@@ -104,7 +102,6 @@ double calculateStudentAverage(const Student& student) {
     return total / student.scores.size();
 }
 
-// Display menu options
 void displayMenu() {
     cout << "\n================================" << endl;
     cout << "   STUDENT RECORD SYSTEM MENU   " << endl;
@@ -116,7 +113,6 @@ void displayMenu() {
     cout << "Enter your choice (1-4): ";
 }
 
-// 1. Add a Student
 void addStudent(vector<Student>& students) {
     Student newStudent;
 
@@ -136,7 +132,6 @@ void addStudent(vector<Student>& students) {
         return;
     }
 
-    // Check for duplicate ID
     for (const auto& s : students) {
         if (s.id == newStudent.id) {
             cout << "Error: A student with ID " << newStudent.id << " already exists." << endl;
@@ -164,14 +159,12 @@ void addStudent(vector<Student>& students) {
         }
     }
 
-    // Clean up input stream after reading numeric values
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     students.push_back(newStudent);
     cout << "Student \"" << newStudent.name << "\" added successfully." << endl;
 }
 
-// 2. Display All Students
 void displayAllStudents(const vector<Student>& students) {
     if (students.empty()) {
         cout << "No student records found." << endl;
@@ -186,10 +179,8 @@ void displayAllStudents(const vector<Student>& students) {
     cout << "-------------------------------------------------------------------" << endl;
 
     for (const auto& student : students) {
-        // Build scores string (e.g., "[78, 85, 90]")
         string scoresStr = "[";
         for (size_t i = 0; i < student.scores.size(); ++i) {
-            // Format score to 0 precision if whole number, or display cleanly
             scoresStr += to_string(static_cast<int>(student.scores[i]));
             if (i < student.scores.size() - 1) scoresStr += ", ";
         }
@@ -204,8 +195,6 @@ void displayAllStudents(const vector<Student>& students) {
     }
     cout << "-------------------------------------------------------------------" << endl;
 }
-
-// 3. Calculate Average Score for a Specific Student
 void calculateAverage(const vector<Student>& students) {
     if (students.empty()) {
         cout << "No student records found." << endl;
@@ -221,7 +210,6 @@ void calculateAverage(const vector<Student>& students) {
         return;
     }
 
-    // Clean up trailing newline after reading searchID
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
     for (const auto& student : students) {
@@ -250,7 +238,6 @@ int main() {
             continue;
         }
 
-        // Clean up stream buffer after reading numeric choice
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         switch (choice) {
