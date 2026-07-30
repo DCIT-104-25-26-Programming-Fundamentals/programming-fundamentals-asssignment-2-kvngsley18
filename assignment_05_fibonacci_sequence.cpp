@@ -51,3 +51,86 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+
+using namespace std;
+
+// =============================================================================
+// PART A — Print the First N Terms
+// =============================================================================
+void printFibonacci(int n) {
+    if (n <= 0) {
+        cout << "Error: Number of terms must be greater than 0." << endl;
+        return;
+    }
+
+    long long first = 0;
+    long long second = 1;
+
+    cout << "Fibonacci sequence: ";
+
+    for (int i = 0; i < n; ++i) {
+        if (i == 0) {
+            cout << first;
+        } else if (i == 1) {
+            cout << " " << second;
+        } else {
+            long long next = first + second;
+            cout << " " << next;
+            first = second;
+            second = next;
+        }
+    }
+    cout << endl;
+}
+
+// =============================================================================
+// PART B — Check if a Number Belongs to the Sequence
+// =============================================================================
+bool isFibonacci(long long number) {
+    if (number < 0) return false;
+
+    long long first = 0;
+    long long second = 1;
+
+    if (number == first || number == second) return true;
+
+    long long next = first + second;
+
+     while (next <= number) {
+        if (next == number) {
+            return true;
+        }
+        first = second;
+        second = next;
+        next = first + second;
+    }
+
+    return false;
+}
+
+int main() {
+    //PART A
+    cout << "--- Part A: Print Sequence ---" << endl;
+    int n;
+    cout << "How many terms? ";
+    cin >> n;
+
+    printFibonacci(n);
+
+    cout << endl;
+
+    //  PART B 
+    cout << "--- Part B: Check Fibonacci Number ---" << endl;
+    long long checkNum;
+    cout << "Enter a number to check: ";
+    cin >> checkNum;
+
+    if (isFibonacci(checkNum)) {
+        cout << checkNum << " is a Fibonacci number." << endl;
+    } else {
+        cout << checkNum << " is NOT a Fibonacci number." << endl;
+    }
+
+    return 0;
+}
