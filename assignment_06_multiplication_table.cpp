@@ -57,3 +57,73 @@
 #include <iostream>
 using namespace std;
 
+#include <iostream>
+#include <iomanip>
+
+using namespace std;
+
+// =============================================================================
+// PART A — Single Table
+// =============================================================================
+void printSingleTable(int num) {
+    if (num <= 0) {
+        cout << "Error: Number must be a positive integer." << endl;
+        return;
+    }
+
+    cout << "Multiplication Table for " << num << ":" << endl;
+    for (int i = 1; i <= 12; ++i) {
+        cout << setw(2) << num << "  x " 
+             << setw(2) << i << "  = " 
+             << setw(4) << (num * i) << endl;
+    }
+}
+
+// =============================================================================
+// PART B — Tables from 1 to N
+// =============================================================================
+void printTablesUpToN(int n) {
+    if (n <= 0) {
+        cout << "Error: Number of tables must be a positive integer." << endl;
+        return;
+    }
+
+    for (int i = 1; i <= n; ++i) {
+        printSingleTable(i);
+        if (i < n) {
+            cout << "---------------------------" << endl;
+        }
+    }
+}
+
+int main() {
+    int choice;
+
+    cout << "=== Multiplication Table Generator ===" << endl;
+    cout << "1. Print Single Table (Part A)" << endl;
+    cout << "2. Print Tables 1 to N (Part B)" << endl;
+    cout << "Enter choice (1-2): ";
+    cin >> choice;
+
+    cout << endl;
+
+    if (choice == 1) {
+        int num;
+        cout << "Enter a number: ";
+        cin >> num;
+        cout << endl;
+        printSingleTable(num);
+
+    } else if (choice == 2) {
+        int n;
+        cout << "Enter N: ";
+        cin >> n;
+        cout << endl;
+        printTablesUpToN(n);
+
+    } else {
+        cout << "Error: Invalid choice program exit." << endl;
+    }
+
+    return 0;
+}
