@@ -68,8 +68,151 @@
 // YOUR CODE BELOW — remove the // symbols from the scaffold and fill it in
 // =============================================================================
 
+
 #include <iostream>
 #include <iomanip>
 #include <cmath>
+#include <limits>
+
 using namespace std;
 
+// =============================================================================
+// ARITHMETIC OPERATION FUNCTIONS
+// =============================================================================
+
+double add(double a, double b) {
+    return a + b;
+}
+
+double subtract(double a, double b) {
+    return a - b;
+}
+
+double multiply(double a, double b) {
+    return a * b;
+}
+
+// Returns true if division was successful, false if division by zero
+bool divide(double a, double b, double& result) {
+    if (b == 0) {
+        return false;
+    }
+    result = a / b;
+    return true;
+}
+
+bool modulus(double a, double b, double& result) {
+    if (b == 0) {
+        return false;
+    }
+    result = fmod(a, b);
+    return true;
+}
+
+double power(double base, double exponent) {
+    return pow(base, exponent);
+}
+
+// =============================================================================
+// UI AND MAIN LOOP
+// =============================================================================
+
+void displayMenu() {
+    cout << "\n============================" << endl;
+    cout << "       SIMPLE CALCULATOR    " << endl;
+    cout << "============================" << endl;
+    cout << "1. Addition" << endl;
+    cout << "2. Subtraction" << endl;
+    cout << "3. Multiplication" << endl;
+    cout << "4. Division" << endl;
+    cout << "5. Modulus" << endl;
+    cout << "6. Exponentiation" << endl;
+    cout << "7. Quit" << endl;
+    cout << "Select an operation (1-7): ";
+}
+
+// Helper to reliably prompt and read a double input
+bool getOperand(const string& prompt, double& value) {
+    cout << prompt;
+    while (!(cin >> value)) {
+        cout << "Invalid input. Please enter a valid number: ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    }
+    return true;
+}
+
+int main() {
+    int choice = 0;
+
+    while (choice != 7) {
+        displayMenu();
+
+        if (!(cin >> choice)) {
+            cout << "Error: Invalid input. Please enter a number between 1 and 7." << endl;
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            continue;
+        }
+
+        if (choice == 7) {
+            cout << "Goodbye!" << endl;
+            break;
+        }
+
+        if (choice < 1 || choice > 7) {
+            cout << "Error: Choice must be between 1 and 7." << endl;
+            continue;
+        }
+
+        double num1, num2, result;
+        getOperand("Enter first number : ", num1);
+        getOperand("Enter second number: ", num2);
+
+        // Format floating point numbers to 2 decimal places
+        cout << fixed << setprecision(2);
+
+        switch (choice) {
+            case 1:
+                result = add(num1, num2);
+                cout << "Result: " << num1 << " + " << num2 << " = " << result << endl;
+                break;
+
+            case 2:
+                result = subtract(num1, num2);
+                cout << "Result: " << num1 << " - " << num2 << " = " << result << endl;
+                break;
+
+            case 3:
+                result = multiply(num1, num2);
+                cout << "Result: " << num1 << " * " << num2 << " = " << result << endl;
+                break;
+
+            case 4:
+                if (divide(num1, num2, result)) {
+                    cout << "Result: " << num1 << " / " << num2 << " = " << result << endl;
+                } else {
+                    cout << "Error: Cannot divide by zero." << endl;
+                }
+                break;
+
+            case 5:
+                if (modulus(num1, num2, result)) {
+                    cout << "Result: " << num1 << " % " << num2 << " = " << result << endl;
+                } else {
+                    cout << "Error: Cannot perform modulus by zero." << endl;
+                }
+                break;
+
+            case 6:
+                result = power(num1, num2);
+                cout << "Result: " << num1 << " ^ " << num2 << " = " << result << endl;
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    return 0;
+}
