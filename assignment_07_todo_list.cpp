@@ -80,3 +80,122 @@
 #include <string>
 using namespace std;
 
+#include <iostream>
+#include <vector>
+#include <string>
+#include <limits>
+
+using namespace std;
+
+// Display menu options
+void displayMenu() {
+    cout << "\n============================" << endl;
+    cout << "       TO-DO LIST MENU      " << endl;
+    cout << "============================" << endl;
+    cout << "1. Add task" << endl;
+    cout << "2. View tasks" << endl;
+    cout << "3. Delete task" << endl;
+    cout << "4. Quit" << endl;
+    cout << "Enter your choice (1-4): ";
+}
+
+// 1. Add a Task
+void addTask(vector<string>& tasks) {
+    string task;
+    cout << "Enter task: ";
+    
+    // Clear newline character left in input stream by previous cin >> choice
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    getline(cin, task);
+
+    if (task.empty()) {
+        cout << "Task description cannot be empty." << endl;
+        return;
+    }
+
+    tasks.push_back(task);
+    cout << "Task added: \"" << task << "\"" << endl;
+}
+
+// 2. View All Tasks
+void viewTasks(const vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty!" << endl;
+        return;
+    }
+
+    cout << "\nYour Tasks:" << endl;
+    for (size_t i = 0; i < tasks.size(); ++i) {
+        cout << (i + 1) << ". " << tasks[i] << endl;
+    }
+}
+
+// 3. Delete a Task
+void deleteTask(vector<string>& tasks) {
+    if (tasks.empty()) {
+        cout << "Your to-do list is empty. Nothing to delete." << endl;
+        return;
+    }
+
+    // Display list first so user knows the numbers
+    viewTasks(tasks);
+
+    int taskNum;
+    cout << "Enter task number to delete: ";
+    
+    if (!(cin >> taskNum)) {
+        cout << "Error: Invalid input. Please enter a valid number." << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        return;
+    }
+
+    // Validate if number is within range 1 to tasks.size()
+    if (taskNum < 1 || static_cast<size_t>(taskNum) > tasks.size()) {
+        cout << "Error: Invalid task number." << endl;
+        return;
+    }
+
+    // Adjust 1-based user input to 0-based vector index
+    int index = taskNum - 1;
+    string removedTask = tasks[index];
+    
+    tasks.erase(tasks.begin() + index);
+    cout << "Task \"" << removedTask << "\" has been removed." << endl;
+}
+
+int main() {
+    vector<string> tasks;
+    int choice = 0;
+
+    while (choice != 4) {
+        displayMenu();
+
+        if (!(cin >> choice)) {
+            cout << "Error: Invalid choice. Please enter a number between 1 and 4." << endl;
+            cin.clear(); // Clear error state flag
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear stream buffer
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                addTask(tasks);
+                break;
+            case 2:
+                viewTasks(tasks);
+                break;
+            case 3:
+                deleteTask(tasks);
+                break;
+            case 4:
+                cout << "Goodbye!" << endl;
+                break;
+            default:
+                cout << "Error: Choice must be between 1 and 4." << endl;
+                break;
+        }
+    }
+
+    return 0;
+}
